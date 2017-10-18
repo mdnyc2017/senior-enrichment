@@ -1,32 +1,21 @@
 'use strict'
-const router = require('express').Router()
-const db = require('../db/models/models').db
-const Student = require('../db/models/models').Student
-const Campus = require('./db/models/models').Campus
+const express = require('express')
+const router = express.Router()
+const db = require('../db/main')
 
+const Student = require('/Users/michaeldouglas/fullstack_github/seniorEnrichmentProject/senior-enrichment/db/models/Student.js')
+const Campus = require('/Users/michaeldouglas/fullstack_github/seniorEnrichmentProject/senior-enrichment/db/models/Campus.js')
 // If you aren't getting to this object, but rather the index.html (something with a joke) your path is wrong.
 	// I know this because we automatically send index.html for all requests that don't make sense in our backend.
 	// Ideally you would have something to handle this, so if you have time try that out!
-api.get('/hello', (req, res) => res.send({hello: 'world'}))
+router.get('/hello', (req, res) => res.send({hello: 'world'}))
 
 
-// * can navigate to **Campuses** from **Home**
-// * can navigate to **Students** from **Home**
 
-// const redirectCampus = (res)=> {
-// 	return ()=> {
-// 	  res.redirect('/campus');
-// 	};
-//   };
 
-//   const redirect = (res)=> {
-// 	return ()=> {
-// 	  res.redirect('/users');
-// 	};
-//   };
 
 //get all campuses
-api.get('/campus', (req, res, next) =>{
+router.get('/campus', (req, res, next) =>{
 	Campus.findAll()
 	.then(campus =>{
 		res.json(campus)
@@ -35,7 +24,7 @@ api.get('/campus', (req, res, next) =>{
 })
 
 //get one campus
-api.get('/campus/:id', (req, res, next)=>{
+router.get('/campus/:id', (req, res, next)=>{
 	//in corey's demo he stores id as a const
 	const id = req.params.id
 	Campus.findById(id)
@@ -46,7 +35,7 @@ api.get('/campus/:id', (req, res, next)=>{
 })
 
 //create one campus
-api.post('/campus', (req, res, next) =>{
+router.post('/campus', (req, res, next) =>{
 	Campus.create(req.body)
 	.then(newCampus=>{
 		res.json(newCampus)
@@ -55,7 +44,7 @@ api.post('/campus', (req, res, next) =>{
 })
 
 //update campus
-api.put('/campus', (req, res, next)=>{
+router.put('/campus', (req, res, next)=>{
 	const id = req.params.id;
 	Campus.findById(id)
 	.then(foundCampus =>{
@@ -68,7 +57,7 @@ api.put('/campus', (req, res, next)=>{
 })
 
 //delete campus
-api.delete('/campus/:id', (req, res, next)=>{
+router.delete('/campus/:id', (req, res, next)=>{
 	const id = req.params.id
 	Campus.destroy({
 		where:{
@@ -83,7 +72,7 @@ api.delete('/campus/:id', (req, res, next)=>{
 
 
 //get all students
-api.get('/students', (req, res, next)=>{
+router.get('/students', (req, res, next)=>{
 	Student.findAll()
 	.then(students=>{
 		res.json(students)
@@ -92,7 +81,7 @@ api.get('/students', (req, res, next)=>{
 })
 
 //get one student
-api.get('/students/:id', (req, res, next)=>{
+router.get('/students/:id', (req, res, next)=>{
 	const id = req.params.id;
 	Student.findById(id)
 	.then(foundStudent=>{
@@ -102,7 +91,7 @@ api.get('/students/:id', (req, res, next)=>{
 })
 
 //create a student
-api.post('/students', (req, res, next) =>{
+router.post('/students', (req, res, next) =>{
 	Student.create(req.body)
 	.then(newStudent=>{
 		res.json(newStudent)
@@ -110,7 +99,7 @@ api.post('/students', (req, res, next) =>{
 	.catch(next)
 })
 //update a student
-api.put('/student/:id', (req, res, next)=>{
+router.put('/student/:id', (req, res, next)=>{
 	const id = req.params.id
 	Student.findById(id)
 	.then(foundStudent=>{
@@ -122,7 +111,7 @@ api.put('/student/:id', (req, res, next)=>{
 	.catch(next)
 })
 //delete a student
-api.delete('/students/:id', (req, res, next) =>{
+router.delete('/students/:id', (req, res, next) =>{
 	const id = req.params.id;
 	Student.destroy({
 		where:{
@@ -136,6 +125,8 @@ api.delete('/students/:id', (req, res, next) =>{
 })
 
 // - Navigation: as a user I...
+// * can navigate to **Campuses** from **Home**
+// * can navigate to **Students** from **Home**
 // * will land on **Home** by default
 // * can navigate to view a **Single Campus** from **Campuses**
 // * can navigate to view a **Single Student** from **Students**
@@ -144,4 +135,4 @@ api.delete('/students/:id', (req, res, next) =>{
 
 
   
-module.exports = api
+module.exports = router

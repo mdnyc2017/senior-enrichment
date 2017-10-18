@@ -16,10 +16,10 @@ module.exports = new Sequelize(connectionString, {
 });
 
 // run our models file (makes all associations for our Sequelize objects)
-require('./models')
-const Students =require('./models').Student;
-const Campus = require('./models').Campus;
+const Student =require('./models/Student');
+const Campus = require('./models/Campus');
 
 
-Stduent.belongsTo(Campus)
+
+Student.belongsTo(Campus)
 Campus.hasMany(Student);
