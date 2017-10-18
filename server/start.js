@@ -43,3 +43,10 @@ if (module === require.main) {
     app.listen(PORT, () => console.log(`server listening on port ${PORT}`))
   });
 }
+
+db.sync()
+.then(() => {
+    app.listen(8000, () => {
+        console.log("listening on 8000")
+    })
+})
