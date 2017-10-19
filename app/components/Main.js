@@ -1,43 +1,45 @@
 
 import React, { Component } from 'react';
 import {render} from 'react-dom'
+import axios from 'axios'
 import {Link, BrowserRouter, Switch, Route} from 'react-router-dom'
 //browserrouter app demo: https://medium.com/@pshrmn/a-simple-react-router-v4-tutorial-7f23ff27adf
-import axios from 'axios'
+
 
 import NavComponent from './Navbar';
 //campus react components:
-import AllCampuses from './AllCampuses'
-import SingleCampus from './SingleCampus'
-import UpdateCampus from './UpdateCampus'
-import AddCampus from './AddCampus'
+import AllCampuses from './CampusComponents/AllCampuses'
+import SingleCampus from './CampusComponents/SingleCampus'
+import UpdateCampus from './CampusComponents/UpdateCampus'
+import AddCampus from './CampusComponents/AddCampus'
 
 //student react components:
-import AllStudents from './AllStudents'
-import SingleStudent from './SingleStudent'
-import AddStudent from './AddStudent'
-import UpdateStudent from './UpdateStudent'
+import AllStudents from './StudentComponents/AllStudents'
+import SingleStudent from './StudentComponents/SingleStudent'
+import AddStudent from './StudentComponents/AddStudent'
+import UpdateStudent from './StudentComponents/UpdateStudent'
 
 const Main = function(){
     return(
         <BrowserRouter>
-            <Switch>
-                <Route exact path='/campus/:campusId' component={SingleCampus} />
-                <Route exact path='/students' component={AllStudents}/>
-                <Route exact path='/editStudent/:studentId' component={UpdateStudent}/>
-                <Route exact path='/editCampus/:campusId' component={UpdateCampus} />
-                <Route exact path='/enlist' component={AddStudent}  />
-                <Route exact path='/addCampus' component={AddCampus} />
-                <Route exact path='/student/:studentId' component={SingleStudent}/>
-                <Route path='/' component={AllCampuses} />
-            </Switch>
+            <div>
+                <NavComponent />
+              <h1>Margaret Hamilton Interplanetary Academy of JavaScript</h1>
+              <h3>Dedicated to those who made the ultimate sacrifice, <br/>that we might slip the surly bonds of earth, <br/>touch the face of God, <br/>and build fullstack javascript apps in space. </h3>
+                <Switch>
+                    <Route exact path='/campus/:campusId' component={SingleCampus} />
+                    <Route exact path='/students' component={AllStudents}/>
+                    <Route exact path='/student/:studentId' component={SingleStudent}/>
+                    <Route path='/' component={AllCampuses} />
+                </Switch>
+            </div>
         </BrowserRouter>
         
     )
 }
-Render(
+render(
     <Main />, 
-    document.getElementById('main')
+    document.getElementById('app')
 )
 
 
@@ -138,3 +140,9 @@ Render(
 //         )
 //       }
 //     }
+
+
+// <Route exact path='/updateStudent/:studentId' component={UpdateStudent}/> 
+// <Route exact path='/updateCampus/:campusId' component={UpdateCampus} />
+//  {/* <Route exact path='/enlist' component={AddStudent}  />  */}
+/* <Route exact path='/addCampus' component={AddCampus} />  */

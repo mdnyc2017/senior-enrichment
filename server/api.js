@@ -26,8 +26,13 @@ router.get('/campus', (req, res, next) =>{
 //get one campus
 router.get('/campus/:id', (req, res, next)=>{
 	//in corey's demo he stores id as a const
-	const id = req.params.id
-	Campus.findById(id)
+	const id = Number(req.params.id);
+	Campus.findOne({
+		where:{
+			id : id
+		},
+		include:[Student]
+	})
 	.then(campus=>{
 		res.json(campus)
 	})

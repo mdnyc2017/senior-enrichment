@@ -23,3 +23,4 @@ const Campus = require('./models/Campus');
 
 Student.belongsTo(Campus)
 Campus.hasMany(Student);
+

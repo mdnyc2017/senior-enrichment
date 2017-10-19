@@ -17,6 +17,7 @@ should also include form to assign person created to a campus
   */
 
 import React, { Component } from 'react';
+import {render} from 'react-dom'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import DeleteCampus from './DeleteCampus' //makes sense to have delete button on list of all campuses
@@ -35,11 +36,12 @@ export default class AllCampuses extends Component {
     .then(res=> res.data)
     .then(allCampusesFromDatabase=>{
       this.setState({
-        allCampuses: allCampusesFromDatase
+        allCampuses: allCampusesFromDatabase
       })
     })
-    .catch(err=> console.error('error is: ', error))
+    .catch(err=> console.error('error is: ', err))
   }
+  
  
   render(){
   return (
@@ -48,10 +50,14 @@ export default class AllCampuses extends Component {
             {this.state.allCampuses && this.state.allCampuses.map(campus=>{
               return(
                 <div key={campus.id}>
-                  <DeleteCampus delete={campus.id} /> //each campus is mapped with delete functionality
                   <Link to={`/campus/${campus.id}`}>
+                  <br />
                   <span>{campus.name}</span>
+                  <br />
                   <img src={ campus.image } width="200" />
+                  <br />
+                  <DeleteCampus delete={campus.id} />
+                  <br />
                   </Link>
                 </div>
               )
@@ -62,7 +68,6 @@ export default class AllCampuses extends Component {
     };
   }
     
-export default AllCampuses;
 
 
 

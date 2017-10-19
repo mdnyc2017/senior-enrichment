@@ -12,7 +12,7 @@ export default class DeleteCampus extends Component{
     deleteCampus(){
         const id = this.state.campusToDelete;
         axios.delete(`/api/campus/${id}`)
-        .catch(error => console.log('error is: ', error))
+        .catch(error => console.error('error is: ', error))
     }
     render(){
      return(
