@@ -30,5 +30,5 @@ const AllStudents = (props) =>{
       );
     };
     
-export default AllCampuses;
+export default AllStudents;
 

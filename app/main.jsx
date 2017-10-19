@@ -5,13 +5,11 @@ import { Provider } from 'react-redux'
 
 import store from './store'
 import Root from './components/Root'
-
+import Main from './components/Main'
 render (
   // <Provider store={store}>
   //   <Root/>
   // </Provider>,
   <Main />,
-  <AllCampuses />,
-  <NavComponent />,
   document.getElementById('app')
 )
