@@ -21,7 +21,9 @@ export default class UpdateStudent extends Component{
         }
         axios.put(`/api/student/${id}`, updatedStudent)
         .then(res => res.data)
-        .then(result => console.log('result is: ', result))
+        .then(result => {
+            this.props.update(result)
+            console.log('result is: ', result)})
         .catch(err=>console.error('error is: ', err))
     }
     handleChange(event){
@@ -36,13 +38,13 @@ export default class UpdateStudent extends Component{
         return(
             <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
                 <label>
-                Update Student Name
+                 Student ID to be Updated
                     <div>
                         <input type="text" name="newStudentName" />
                     </div>
                 </label>
                 <label>
-                Update Student Email
+                New Student Name
                     <div>
                         <input type="text" name="newStudentEmail" />
                     </div>

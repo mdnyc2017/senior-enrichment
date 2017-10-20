@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import AllCampuses from './AllCampuses'
 import AddStudent from '../StudentComponents/AddStudent'
-
+import UpdateStudent from '../StudentComponents/UpdateStudent'
 
 export default class SingleCampus extends Component {
 
@@ -17,7 +17,6 @@ export default class SingleCampus extends Component {
     super(props);
     this.state = {
       campus: {},
-
     };
   }
 
@@ -32,26 +31,52 @@ export default class SingleCampus extends Component {
       .catch(error => console.error('error is: ', error))
     }
 
+  addStudent(addedStudent){
+    const newStudentArr = this.state.campus.students.slice()
+    const newObj = Object.assign({}, this.state.campus, {students: newStudentArr})
+
+    newStudentArr.push(addedStudent)
+
+    this.setState({
+      campus : newObj
+    })
+  }
+
+  updateStudent(updatedStudent){
+    const newStudentArr = this.state.campus.students.slice()
+    const indexToBeUpdated = newStudentArr.findIndex((student)=> Number(updatedStudent.id) === Number(student.id));
+    const newObj = Object.assign({}, this.state.campus, {students: newStudentArr})
+
+    newStudentArr[indexToBeUpdated] = updatedStudent
+    
+    this.setState({
+      campus: newObj
+    })
+    
+  }
+
   render () {
-    // {console.log('!!!!!!', this.state.campus)}
+    {console.log('image is', this.state.campus.image)}
     //my students have a campusId. how do I use that to render the appropriate campus image?
     return (
       <div>
-      <h1>Enrolled Students</h1>
-      
-      {
-        this.state.campus.students && this.state.campus.students.map(student=>{
-          return(
-            <div>
-              <img src={ this.state.campus.image } width="200" />
-              <ol key={student.id}>
-              <li>{student.name}</li>
-              </ol>
-            </div>
-          )
-        })
-      }
-      <AddStudent />
+        <h1>{this.state.campus.name}  </h1>
+        <img src={ this.state.campus.image } width="200" />
+        <br/>
+        <h3>Enrolled Students</h3>
+        <ol >
+          {
+            this.state.campus.students && this.state.campus.students.map(student=>{
+              return(
+                  <li key={student.id}>{student.name}</li>            
+              )
+            })
+          }
+        </ol>
+        <h2>Add Student Here</h2>
+        <AddStudent id={this.props.match.params.campusId} add={this.addStudent.bind(this)}/>
+        <h2>Update Students Here</h2>
+        <UpdateStudent update={this.updateStudent.bind(this)}/>
       </div>
     );
   }

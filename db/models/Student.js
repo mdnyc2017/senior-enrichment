@@ -4,14 +4,10 @@ const db = require('../main')
 var Student = db.define('student', {
 	name: {
 		type: Sequelize.STRING,
-		allowNull: false,
+		allowNull: false},
 	email: {
-		type: Sequelize.STRING,
-		validate: {
-			notEmpty: true
+		type: Sequelize.STRING
 		}
-		}
-	}
 	
 })
 

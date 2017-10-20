@@ -7,7 +7,8 @@ export default class AddStudent extends Component{
         super(props)
         this.state={
             newStudentName: '',
-            newStudentEmail: ''
+            newStudentEmail: '',
+            id: props.id
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleChange = this.handleChange.bind(this)
@@ -18,11 +19,15 @@ export default class AddStudent extends Component{
         // const id = this.props.match.params.studentId
         const updatedStudent={
             name: this.state.newStudentName,
-            email: this.state.newStudentEmail
+            email: this.state.newStudentEmail,
+            campusId: this.state.id
         }
-        axios.post('/api/student/', updatedStudent)
+        console.log('!!!!!!!', updatedStudent)
+        axios.post('/api/students/', updatedStudent)
         .then(res => res.data)
-        .then(result=>console.log('result is: ', result))
+        .then(result=>{
+            this.props.add(result)
+            console.log('result is: ', result)})
         .catch(err => console.error('error is: ', err))
     }
 

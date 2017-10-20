@@ -20,7 +20,9 @@ import React, { Component } from 'react';
 import {render} from 'react-dom'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import DeleteCampus from './DeleteCampus' //makes sense to have delete button on list of all campuses
+import DeleteCampus from './DeleteCampus' 
+import AddCampus from './AddCampus'
+import UpdateCampus from './UpdateCampus'
 
 export default class AllCampuses extends Component {
   constructor(props){
@@ -29,6 +31,7 @@ export default class AllCampuses extends Component {
       allCampuses: [],
       selectedCampus: '',
     }
+   
   }
   
   componentDidMount(){
@@ -41,9 +44,37 @@ export default class AllCampuses extends Component {
     })
     .catch(err=> console.error('error is: ', err))
   }
-  
- 
+
+  updateCampus(updatedCampus){
+    const newAllCampusArr = this.state.allCampuses.slice()
+    const indexToBeUpdated = newAllCampusArr.findIndex((campus)=> Number(updatedCampus.id) === Number(campus.id));
+    console.log('indexToBeUpdated is: ', indexToBeUpdated)
+    newAllCampusArr[indexToBeUpdated]=updatedCampus
+    console.log('newAllCampusArr is: ', newAllCampusArr)
+    this.setState({
+      allCampuses: newAllCampusArr
+    })
+  }
+
+  addCampus(newCampus){
+    const newAllCampusArr = this.state.allCampuses.slice()
+    newAllCampusArr.push(newCampus)
+    this.setState({
+      allCampuses: newAllCampusArr
+    })    
+  }
+
+  deleteCampus(idToDelete){
+    const newAllCampusArr = this.state.allCampuses.filter((campus)=>{
+      return campus.id !== idToDelete
+    })
+    this.setState({
+      allCampuses: newAllCampusArr
+    })    
+  }
+
   render(){
+    console.log('this.state.allCampuses', this.state.allCampuses)
   return (
         <div>
           <ol>
@@ -51,18 +82,23 @@ export default class AllCampuses extends Component {
               return(
                 <div key={campus.id}>
                   <Link to={`/campus/${campus.id}`}>
-                  <br />
-                  <span>{campus.name}</span>
-                  <br />
-                  <img src={ campus.image } width="200" />
-                  <br />
-                  <DeleteCampus delete={campus.id} />
-                  <br />
+                    <br />
+                    <span>{campus.name}</span>
+                    <br />
+                    <img src={ campus.image } width="200" />
+                    <br />
                   </Link>
+                  <DeleteCampus delete={campus.id} deleteFromState={this.deleteCampus.bind(this)}/>
+                  <br />
                 </div>
               )
             })}
           </ol>
+          <h2>Add Campus Here:</h2>
+          <AddCampus add={(campusToAdd) => this.addCampus(campusToAdd)}/>
+          <br/>
+          <h2>Update Campus Here:</h2>
+          <UpdateCampus update={(updatedCampus)=>this.updateCampus(updatedCampus)}/>
         </div>
       );
     };
@@ -79,6 +115,21 @@ export default class AllCampuses extends Component {
 
 // this structure is from Juke, dan said not to use it but I'm storing it here for reference:
 
+{/* <form onChange={this.handleChange} onSubmit={this.handleSubmit}>
+<label>
+Add Campus Name:
+  <div>
+    <input type="text" name="props.newCampusName" />
+  </div>
+</label>
+<label>
+Add Campus Image URL:
+  <div>
+    <input type="text" name="props.newCampusImage" />
+  </div>
+</label>
+<button type="submit">Submit</button>
+</form> */}
 
 {/* <ol> */}
 // <Link to={'/addCampus'}>Add Campus</Link>

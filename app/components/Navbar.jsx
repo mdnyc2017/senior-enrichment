@@ -24,11 +24,7 @@ export default class NavComponent extends Component {
           <nav>
           <div className="navWide">
               <div className="wideDiv">
-                  <a href="#/">Home</a>
-                  <br/>
-                  <a href="#/campus">Campuses</a>
-                  <br/>
-                  <a href="#/students">Students</a>
+                  <a href="/">Home Base</a>
               </div>
           </div>
           </nav>

@@ -49,7 +49,7 @@ router.post('/campus', (req, res, next) =>{
 })
 
 //update campus
-router.put('/campus', (req, res, next)=>{
+router.put('/campus/:id', (req, res, next)=>{
 	const id = req.params.id;
 	Campus.findById(id)
 	.then(foundCampus =>{
