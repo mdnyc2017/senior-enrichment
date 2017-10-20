@@ -15,13 +15,14 @@ import AllCampuses from './AllCampuses'
 import AddStudent from '../StudentComponents/AddStudent'
 import UpdateStudent from '../StudentComponents/UpdateStudent'
 import DeleteStudent from '../StudentComponents/DeleteStudent'
+import SingleStudent from '../StudentComponents/SingleStudent'
 
 export default class SingleCampus extends Component {
 
   constructor (props) {
     super(props);
     this.state = {
-      campus: {},
+      campus: [],
       students: []
     };
   }
@@ -54,46 +55,47 @@ export default class SingleCampus extends Component {
   updateStudent(updatedStudent){
     const newStudentArr = this.state.campus.students.slice()
     const indexToBeUpdated = newStudentArr.findIndex((student)=> Number(updatedStudent.id) === Number(student.id));
-    const newObj = Object.assign({}, this.state.campus, {students: newStudentArr})
+    // const newObj = Object.assign({}, this.state.campus, {students: newStudentArr})
 
     newStudentArr[indexToBeUpdated] = updatedStudent
     
     this.setState({
-      campus: newObj
+      students: newStudentArr
     })
-    
   }
 
   deleteAStudent(studentIdToDelete){
     const newStudentArr = this.state.students.filter((student)=>{
       return student.id !== studentIdToDelete
     })
+    const newObj = Object.assign({}, this.state.campus, {students: newStudentArr})
+    this.setState({
+      campus: newObj
+    })
   }
 
   render () {
-    {console.log('image is', this.state.campus.image)}
-    //my students have a campusId. how do I use that to render the appropriate campus image?
     return (
       <div>
         <h1>{this.state.campus.name}  </h1>
+        <h2>Campus ID: {this.state.campus.id}</h2>
         <img src={ this.state.campus.image } width="200" />
         <br/>
         <h3>Enrolled Students</h3>
         <ol>
-          <Link to={`/student/${student.id}`}>
           {
             this.state.campus.students && this.state.campus.students.map(student=>{
               return(
-                <div>
+                <div key={student.id}>
+                <Link to={`/students/${student.id}`}>
                     <li key={student.id}>{student.name}</li>   
-                    <li>email: {student.email}</li>  
-                    <li>Id Number: {student.id}</li> 
+                    <ul>email: {student.email}</ul>  
+                    <ul>Id Number: {student.id}</ul> 
+                </Link>
                 </div>       
               )
             })
           }
-          </Link>
-          <DeleteStudent delete={this.deleteAStudent.bind(this)} />
         </ol>
         <h2>Add Student Here</h2>
         <AddStudent id={this.props.match.params.campusId} add={this.addStudent.bind(this)}/>
@@ -101,6 +103,7 @@ export default class SingleCampus extends Component {
         <h2>Update Students Here</h2>
         <UpdateStudent update={this.updateStudent.bind(this)}/>
         <br/>
+        <DeleteStudent delete={this.deleteAStudent.bind(this)} />
       </div>
     );
   }

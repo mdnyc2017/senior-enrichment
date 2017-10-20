@@ -29,8 +29,10 @@ const Main = function(){
                 <Switch>
                     <Route exact path='/campus/:campusId' component={SingleCampus} />
                     <Route exact path='/students' component={AllStudents}/>
-                    <Route exact path='/student/:studentId' component={SingleStudent}/>
-                    <Route path='/' component={AllCampuses} />
+                    <Route exact path='/students/:studentId' component={SingleStudent}/>
+                    <Route exact path='/' component={AllCampuses} />
+                    <Route exact path='/campus' component={AllCampuses} />
+                    <Route exact path='/students' component={AllStudents} />
                 </Switch>
             </div>
         </BrowserRouter>

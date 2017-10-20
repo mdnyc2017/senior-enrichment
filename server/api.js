@@ -87,13 +87,20 @@ router.get('/students', (req, res, next)=>{
 
 //get one student
 router.get('/students/:id', (req, res, next)=>{
-	const id = req.params.id;
-	Student.findById(id)
+	const id = Number(req.params.id);
+	Student.findOne({
+		where:{
+			id : id
+		},
+		include:[Campus]
+	})
 	.then(foundStudent=>{
 		res.json(foundStudent)
 	})
 	.catch(next)
 })
+
+
 
 //create a student
 router.post('/students', (req, res, next) =>{
@@ -103,6 +110,8 @@ router.post('/students', (req, res, next) =>{
 	})
 	.catch(next)
 })
+
+
 //update a student
 router.put('/student/:id', (req, res, next)=>{
 	const id = req.params.id

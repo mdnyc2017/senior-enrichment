@@ -49,9 +49,9 @@ export default class AllCampuses extends Component {
   updateCampus(updatedCampus){
     const newAllCampusArr = this.state.allCampuses.slice()
     const indexToBeUpdated = newAllCampusArr.findIndex((campus)=> Number(updatedCampus.id) === Number(campus.id));
-    console.log('indexToBeUpdated is: ', indexToBeUpdated)
-    newAllCampusArr[indexToBeUpdated]=updatedCampus
-    console.log('newAllCampusArr is: ', newAllCampusArr)
+    // console.log('indexToBeUpdated is: ', indexToBeUpdated)
+    // newAllCampusArr[indexToBeUpdated]=updatedCampus
+    // console.log('newAllCampusArr is: ', newAllCampusArr)
     this.setState({
       allCampuses: newAllCampusArr
     })
@@ -84,7 +84,7 @@ export default class AllCampuses extends Component {
                 <div key={campus.id}>
                   <Link to={`/campus/${campus.id}`}>
                     <br />
-                    <span>{campus.name}</span>
+                    <span>Campus # {campus.id}: {campus.name}</span>
                     <br />
                     <img src={ campus.image } width="200" />
                     <br />

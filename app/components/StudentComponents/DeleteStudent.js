@@ -5,7 +5,7 @@ export default class DeleteStudent extends Component{
     constructor(props){
         super(props)
         this.state={
-            studentToDelete: props.delete
+            studentIdToDelete: props.delete
         }
         this.deleteStudent = this.deleteStudent.bind(this)
     }
@@ -18,10 +18,21 @@ export default class DeleteStudent extends Component{
 
     render(){
         return(
-            <button onClick={this.deleteStudent}>
-            Delete Student by Id
-            </button>
+        <form onSubmit={this.deleteStudent}>
+            <label>
+             Student ID to be Deleted
+                <div>
+                    <input type="text" name="studentToDelete" />
+                </div>
+            </label>
+            <input type="submit" value="Submit" />
+        </form>
         )
     }
-
 }
+
+
+
+{/* <button onClick={this.deleteStudent}>
+Delete Student by Id
+</button> */}

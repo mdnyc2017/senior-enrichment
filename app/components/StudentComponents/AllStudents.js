@@ -1,34 +1,49 @@
-/*
-- Views: as a user I...
-
-  * see a list of all students on the **Students** view
-
-  */
-
 import React, { Component } from 'react';
-const AllStudents = (props) =>{
-    const students = props.students;
-    return (
+import {render} from 'react-dom'
+import { Link } from 'react-router-dom';
+import axios from 'axios';
+  
+import AddStudent from './AddStudent'
+import UpdateStudent from './UpdateStudent'
+import DeleteStudent from './DeleteStudent'
+  
+export default class AllStudents extends Component{
+  constructor(props){
+    super(props);
+    this.state={
+      allStudents: []
+    }
+  }
+
+  componentDidMount(){
+    axios.get('/api/students')
+    .then(res=> res.data)
+    .then(allStudentsFromDatabase=>{
+      this.setState({
+        allStudents: allStudentsFromDatabase
+      })
+    })
+    .catch(err=> console.error('error is: ', err))
+  }
+
+    render() {
+      return(
         <div>
-          <h3>Students</h3>
-          <div className="row">
+          <h3>All Students</h3>
             {
-              AllStudents.map(student => (
-                <div className="col-xs-4" key={ student.id }>
-                  <Link className="thumbnail" to={`/student/${student.id}`}>
-                    <div className="caption">
-                      <h5>
-                        <span>{ student.name }</span>
-                      </h5>
-                    </div>
+              this.state.allStudents.map(student => (
+                <div key={ student.id }>
+                  <Link className="thumbnail" to={`/students/${student.id}`}>
+                    <li key={student.id}> {student.name} </li>   
+                    <ul>email: {student.email}</ul>  
+                    <ul>Id Number: {student.id}</ul> 
                   </Link>
                 </div>
               ))
             }
-          </div>
         </div>
-      );
+      )
+      };
     };
     
-export default AllStudents;
 
