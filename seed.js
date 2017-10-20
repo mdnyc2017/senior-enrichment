@@ -2,26 +2,6 @@ const db = require('./db/main');
 const Student = require('./db/models/Student')
 const Campus = require('./db/models/Campus')
 const Faker = require('faker');
-//make sure path to models is correct
-//bulk create students
-
-
-// function seed() {
-//   const students = [];
-//   for (let i = 0; i < 60; i++) {
-//     students.push(
-//       Student.create({
-//         name: Faker.name.findName(),
-//         email: Faker.internet.email(),
-//         github: Faker.internet.userName(),
-//         image: Faker.image.avatar(),
-//         content: Faker.lorem.paragraph(3),
-//         campusId: Math.floor(Math.random() * 4) + 1
-//       })
-//     );
-//   }
-//   return students;
-// }
 
 db
   .sync({ force: true })

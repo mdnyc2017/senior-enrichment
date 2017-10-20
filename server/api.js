@@ -12,8 +12,6 @@ router.get('/hello', (req, res) => res.send({hello: 'world'}))
 
 
 
-
-
 //get all campuses
 router.get('/campus', (req, res, next) =>{
 	Campus.findAll()
@@ -137,16 +135,5 @@ router.delete('/students/:id', (req, res, next) =>{
 	})
 	.catch(next)
 })
-
-// - Navigation: as a user I...
-// * can navigate to **Campuses** from **Home**
-// * can navigate to **Students** from **Home**
-// * will land on **Home** by default
-// * can navigate to view a **Single Campus** from **Campuses**
-// * can navigate to view a **Single Student** from **Students**
-// * can navigate to view a **Single Student** from **Single Campus** (for any student at that campus)
-// * can navigate to view that student's **Single Campus** from **Single Student**
-
-
   
 module.exports = router
