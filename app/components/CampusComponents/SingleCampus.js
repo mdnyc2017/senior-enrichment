@@ -7,9 +7,14 @@
 
 import React, { Component } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import {render} from 'react-dom'
+
+
 import AllCampuses from './AllCampuses'
 import AddStudent from '../StudentComponents/AddStudent'
 import UpdateStudent from '../StudentComponents/UpdateStudent'
+import DeleteStudent from '../StudentComponents/DeleteStudent'
 
 export default class SingleCampus extends Component {
 
@@ -17,6 +22,7 @@ export default class SingleCampus extends Component {
     super(props);
     this.state = {
       campus: {},
+      students: []
     };
   }
 
@@ -26,7 +32,10 @@ export default class SingleCampus extends Component {
       .then(res => res.data)
       .then(campus => {
         console.log('campus is!!!!', campus)
-        this.setState({ campus : campus })
+        this.setState({ 
+          campus : campus,
+          students : campus.students
+        })
       })
       .catch(error => console.error('error is: ', error))
     }
@@ -55,6 +64,12 @@ export default class SingleCampus extends Component {
     
   }
 
+  deleteAStudent(studentIdToDelete){
+    const newStudentArr = this.state.students.filter((student)=>{
+      return student.id !== studentIdToDelete
+    })
+  }
+
   render () {
     {console.log('image is', this.state.campus.image)}
     //my students have a campusId. how do I use that to render the appropriate campus image?
@@ -64,20 +79,31 @@ export default class SingleCampus extends Component {
         <img src={ this.state.campus.image } width="200" />
         <br/>
         <h3>Enrolled Students</h3>
-        <ol >
+        <ol>
+          <Link to={`/student/${student.id}`}>
           {
             this.state.campus.students && this.state.campus.students.map(student=>{
               return(
-                  <li key={student.id}>{student.name}</li>            
+                <div>
+                    <li key={student.id}>{student.name}</li>   
+                    <li>email: {student.email}</li>  
+                    <li>Id Number: {student.id}</li> 
+                </div>       
               )
             })
           }
+          </Link>
+          <DeleteStudent delete={this.deleteAStudent.bind(this)} />
         </ol>
         <h2>Add Student Here</h2>
         <AddStudent id={this.props.match.params.campusId} add={this.addStudent.bind(this)}/>
+        <br/>
         <h2>Update Students Here</h2>
         <UpdateStudent update={this.updateStudent.bind(this)}/>
+        <br/>
       </div>
     );
   }
 }
+
+

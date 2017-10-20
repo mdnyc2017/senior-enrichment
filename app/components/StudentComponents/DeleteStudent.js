@@ -11,6 +11,7 @@ export default class DeleteStudent extends Component{
     }
     deleteStudent(){
         const id = this.state.studentToDelete;
+        this.props.delete(id)
         axios.delete(`/api/student/${id}`)
         .catch(err => console.error('error is: ', err))
     }
@@ -18,7 +19,7 @@ export default class DeleteStudent extends Component{
     render(){
         return(
             <button onClick={this.deleteStudent}>
-            Delete Student
+            Delete Student by Id
             </button>
         )
     }

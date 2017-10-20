@@ -6,7 +6,8 @@ export default class UpdateStudent extends Component{
         super(props)
         this.state={
             newStudentName:'',
-            newStudentEmail:''
+            newStudentEmail:'',
+            id: ''
         }
         this.handleSubmit = this.handleSubmit.bind(this)
         this.handleChange = this.handleChange.bind(this)
@@ -14,15 +15,16 @@ export default class UpdateStudent extends Component{
 
     handleSubmit(event){
         event.preventDefault()
-        const id = this.props.match.studentId
+        const id = this.state.id
         const updatedStudent = {
             name: this.state.newStudentName,
-            email: this.state.newStudentEmail
+            email: this.state.newStudentEmail,
+            id: this.state.id
         }
+        this.props.update(updatedStudent)        
         axios.put(`/api/student/${id}`, updatedStudent)
         .then(res => res.data)
         .then(result => {
-            this.props.update(result)
             console.log('result is: ', result)})
         .catch(err=>console.error('error is: ', err))
     }
@@ -49,6 +51,13 @@ export default class UpdateStudent extends Component{
                         <input type="text" name="newStudentEmail" />
                     </div>
                 </label>
+                <label>
+                New Student Email Address
+                    <div>
+                        <input type="text" name="newStudentEmail" />
+                    </div>
+                </label>
+                <input type="submit" value="Submit" />
             </form>
         )
     }

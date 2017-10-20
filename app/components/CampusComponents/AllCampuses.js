@@ -20,6 +20,7 @@ import React, { Component } from 'react';
 import {render} from 'react-dom'
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+
 import DeleteCampus from './DeleteCampus' 
 import AddCampus from './AddCampus'
 import UpdateCampus from './UpdateCampus'
@@ -107,6 +108,33 @@ export default class AllCampuses extends Component {
 
 
 
+//   <div>
+//   <h1>{this.state.campus.name}  </h1>
+//   <img src={ this.state.campus.image } width="200" />
+//   <br/>
+//   <h3>Enrolled Students</h3>
+//   <ol >
+//     <Link to={`/student/${student.id}`}>
+//     {
+//       this.state.campus.students && this.state.campus.students.map(student=>{
+//         return(
+//           <div>
+//               <li key={student.id}>{student.name}</li>   
+//               <li>{student.email}</li>  
+//           </div>       
+//         )
+//       })
+//     }
+//     </Link>
+//   </ol>
+//   <h2>Add Student Here</h2>
+//   <AddStudent id={this.props.match.params.campusId} add={this.addStudent.bind(this)}/>
+//   <br/>
+//   <h2>Update Students Here</h2>
+//   <UpdateStudent update={this.updateStudent.bind(this)}/>
+//   <br/>
+// </div>
+// );
 
 
 
